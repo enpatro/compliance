@@ -1,0 +1,1 @@
+{"name":"compliance-portal-calibration","version":"1.0.0","private":true,"scripts":{"start":"python -m http.server 8080","deploy:firebase":"firebase deploy","deploy:hosting":"firebase deploy --only hosting"},"devDependencies":{"firebase-tools":"latest"}}
