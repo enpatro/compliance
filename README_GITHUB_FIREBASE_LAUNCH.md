@@ -1,23 +1,17 @@
-# Compliance Portal - GitHub + Firebase Launch Package
+# Compliance Portal - Fixed GitHub + Firebase Launch Package
 
-## Local test
-```bash
-python -m http.server 8080
-```
-Open `http://localhost:8080`.
+This version fixes the GitHub Pages layout issue by using clean non-minified HTML/CSS and a `.nojekyll` file.
 
 ## GitHub Pages launch
-1. Create a GitHub repository.
-2. Upload all files to repository root.
-3. Go to Settings > Pages.
-4. Select GitHub Actions as source.
-5. Push to `main`.
-6. Workflow `.github/workflows/deploy-github-pages.yml` publishes the portal.
+1. Upload all files to repository root.
+2. Go to Settings > Pages.
+3. Select GitHub Actions as source.
+4. Push to main.
 
 ## Firebase launch
 1. Create Firebase project.
-2. Enable Hosting, Firestore Database, Storage.
-3. Copy Firebase web app config into `firebase-config.js`.
+2. Enable Hosting, Firestore and Storage.
+3. Paste Firebase web config in `firebase-config.js`.
 4. Set `window.useFirebase = true`.
 5. Deploy:
 ```bash
@@ -26,14 +20,6 @@ firebase login
 firebase use YOUR_FIREBASE_PROJECT_ID
 firebase deploy
 ```
-
-## GitHub to Firebase CI/CD
-1. Run:
-```bash
-firebase init hosting:github
-```
-2. Add repo secrets: `FIREBASE_SERVICE_ACCOUNT`, `FIREBASE_PROJECT_ID`.
-3. Use included Firebase workflows.
 
 ## Upload sequence
 ```text
