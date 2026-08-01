@@ -4,7 +4,8 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+window.useFirebase = true;
+window.firebaseConfig = {const firebaseConfig = {
   apiKey: "AIzaSyAyz9raW3A1TqZP2IphlQnT2ZJGBBt0OiM",
   authDomain: "compliance-calibration-2184d.firebaseapp.com",
   projectId: "compliance-calibration-2184d",
