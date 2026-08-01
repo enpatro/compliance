@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compliance Portal | Calibration Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">CP</div>
+        <div>
+          <h1>Compliance Portal</h1>
+          <p>Calibration • AMC • Patrolling</p>
+        </div>
+      </div>
+      <nav>
+        <button class="nav-item active" data-tab="calibration">🧭 Calibration</button>
+        <button class="nav-item" data-tab="amc">🛠 AMC</button>
+        <button class="nav-item" data-tab="patrolling">👣 Patrolling</button>
+        <button class="nav-item" data-tab="settings">⚙ Settings</button>
+      </nav>
+      <div class="side-card">
+        <span class="status-dot"></span>
+        <div>
+          <strong id="syncMode">Local Mode</strong>
+          <small>Use Firebase config for cloud sync</small>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="topbar">
+        <div>
+          <h2 id="pageTitle">Calibration Dashboard</h2>
+          <p>Upload calibration Excel, track certificate numbers, dates, due dates, machine and area status.</p>
+        </div>
+        <div class="top-actions">
+          <label class="button primary">
+            Upload Excel / CSV
+            <input id="excelUpload" type="file" accept=".xlsx,.xls,.csv" hidden />
+          </label>
+          <button id="loadSampleBtn" class="button">Load Sample</button>
+          <button id="exportBtn" class="button">Export CSV</button>
+        </div>
+      </section>
+
+      <section id="calibration" class="tab-panel active">
+        <div class="upload-strip">
+          <div class="upload-info">
+            <strong>Calibration Upload Format</strong>
+            <span>Area, Machine No, Gauge ID, Certificate No, Gauge Description, Range, Work Range, Calibration Date, Due Date, Certificate File</span>
+          </div>
+          <div class="upload-info right">
+            <strong>Certificate Upload</strong>
+            <span>Attach PDF / image certificate from each table row. Firebase mode stores in Cloud Storage.</span>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card blue"><span>Total Gauges</span><strong id="kpiTotal">0</strong></div>
+          <div class="kpi-card green"><span>Valid</span><strong id="kpiValid">0</strong></div>
+          <div class="kpi-card amber"><span>Due in 30 Days</span><strong id="kpiDue30">0</strong></div>
+          <div class="kpi-card orange"><span>Due in 60 Days</span><strong id="kpiDue60">0</strong></div>
+          <div class="kpi-card red"><span>Expired</span><strong id="kpiExpired">0</strong></div>
+          <div class="kpi-card navy"><span>Compliance</span><strong id="kpiCompliance">0%</strong></div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="panel chart-panel"><div class="panel-title">Area Wise Gauges</div><canvas id="areaChart"></canvas></div>
+          <div class="panel chart-panel"><div class="panel-title">Calibration Status</div><canvas id="statusChart"></canvas></div>
+          <div class="panel chart-panel wide"><div class="panel-title">Monthly Due Trend</div><canvas id="dueTrendChart"></canvas></div>
+        </div>
+
+        <div class="filter-bar">
+          <input id="searchInput" placeholder="Search machine, gauge ID, certificate no, description..." />
+          <select id="areaFilter"><option value="">All Areas</option></select>
+          <select id="machineFilter"><option value="">All Machines</option></select>
+          <select id="statusFilter"><option value="">All Status</option><option>Valid</option><option>Due 30</option><option>Due 60</option><option>Expired</option></select>
+        </div>
+
+        <div class="table-wrap">
+          <table id="calTable">
+            <thead>
+              <tr>
+                <th>Area</th><th>Machine No</th><th>Gauge ID</th><th>Certificate No</th><th>Description</th><th>Range</th><th>Cal Date</th><th>Due Date</th><th>Status</th><th>Certificate</th>
+              </tr>
+            </thead>
+            <tbody id="calTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="amc" class="tab-panel placeholder">
+        <h3>AMC Module</h3>
+        <p>Placeholder ready for AMC vendor, frequency, expiry, PO, visit record and certificate upload.</p>
+      </section>
+      <section id="patrolling" class="tab-panel placeholder">
+        <h3>Patrolling Module</h3>
+        <p>Placeholder ready for QR-based patrol route, checkpoint status, abnormality photo and closure tracking.</p>
+      </section>
+      <section id="settings" class="tab-panel placeholder">
+        <h3>Firebase Settings</h3>
+        <p>Edit <code>firebase-config.js</code> and enable Firebase for cloud database and certificate storage.</p>
+        <pre class="code-box">window.firebaseConfig = { apiKey: "...", authDomain: "...", projectId: "...", storageBucket: "..." };</pre>
+      </section>
+    </main>
+  </div>
+  <script src="firebase-config.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
